@@ -13,7 +13,7 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
     _folderAndExt = {
         "Coding" : ['.vi','.py','.c','.cpp','.java'],
         "Images" : ['.jpg','.jpeg','.bmp','.gif','.png'],
-        "Documents" : ['.doc','.docx','.txt','.ppt','.xlsx'],
+        "Documents" : ['.doc','.docx','.txt','.ppt','.xlsx','.pdf'],
         "Installers" : ['.exe','.msi'],
         "Audio" : ['.mp3','.flac','.wav'],
         "Video" : ['.mp4'],
