@@ -2,9 +2,10 @@ import time
 import os
 import logging
 import sys
-from watchdog.events import FileSystemEventHandler
+from watchdog.events import FileSystemEventHandler, LoggingEventHandler
 from watchdog.observers import Observer
 import os.path
+import time
 
 class FileOrganizerEventHandler(FileSystemEventHandler):
     
@@ -16,18 +17,25 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
         "Installers" : ['.exe','.msi'],
         "Audio" : ['.mp3','.flac','.wav'],
         "Video" : ['.mp4'],
-        "Torrents" : ['.torrent']
+        "Torrents" : ['.torrent'],
+        "Compressed" : ['.zip', '.rar']
     }
 
-    def on_created(self, event):
+    # def on_created(self, event):
+    def on_moved(self, event):
         # ignore new folders
         if event.is_directory:
             return
+
+        if not event.src_path.endswith('.crdownload'):
+            return
+        else:
+            time.sleep(1)
         
         # recognize the file
         breakLoop = False
-        file_name = os.path.basename(event.src_path)
-        folder_path = os.path.dirname(event.src_path)
+        file_name = os.path.basename(event._dest_path)
+        folder_path = os.path.dirname(event._dest_path)
         file_name_no_ext = os.path.splitext(file_name)[0]
         file_ext = os.path.splitext(file_name)[1]
         for key in self._folderAndExt:
@@ -46,7 +54,7 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
                                 if os.path.exists(target_path):
                                     target_path = os.path.join(folder_path, key, (file_name_no_ext + '(' + str(x+2) + ')' + file_ext))
                                     continue
-                                os.rename(event.src_path, target_path)
+                                os.rename(event._dest_path, target_path)
                                 break
                             break
                         except Exception as ex:
@@ -60,7 +68,7 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
             if breakLoop: break
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, 
+    logging.basicConfig(level=logging.DEBUG, 
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     
@@ -69,6 +77,7 @@ if __name__ == "__main__":
 
     # listen for new file events
     event_handler = FileOrganizerEventHandler()
+    # event_handler = LoggingEventHandler()
     
     # start Observer
     observer = Observer()
