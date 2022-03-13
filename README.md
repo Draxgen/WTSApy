@@ -1,6 +1,14 @@
-# JT Scripts Platform
-JT Scripts Platform is a platform, that is resposible for launching other scripts. This idea was born, because I did not want to add my every single Python script to Window's Task Scheduler and manually configure it every time. Instead I only add this Platform's main script to the Scheduler to be run on Windows Startup, and it is responsible for dynamically launching other scripts in specified folder.
+# WTSApy - Windows Task Scheduler Alternative for Python
 
-Current launching modes: Windows Startup
+Schedule all your tasks in Windows using only Python.
 
-Launching modes to be added in the future: Windows Shutdown, Application Starting, Time intervals, Given time (13:30 for instance)
+WTSApy is a script that launches other scripts. It is meant to omit using the Windows Task Scheduler, because adding a Python script to it and configuring the task for it is tedious and annoying and also [potentially buggy](https://answers.microsoft.com/en-us/windows/forum/all/task-scheduler-cannot-run-files-at-system-startup/6a8617bc-be73-4719-9cf3-9c17e1cb295b). Instead all you have to do is add a shortcut to WTSApy's main script in the Startup folder. The main script will take care of the rest by dynamically launching other scripts.
+
+Currently supported launching modes: 
+- Windows Startup
+
+Launching modes to be added: 
+- Windows Shutdow
+- Application Starting
+- Time intervals
+- Specific time (13:30 for instance)
