@@ -11,7 +11,7 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
     
     # folders and their extensions
     _folderAndExt = {
-        "Coding" : ['.vi','.py','.c','.cpp','.java'],
+        "Coding" : ['.py','.cs','.c','.cpp'],
         "Images" : ['.jpg','.jpeg','.bmp','.gif','.png'],
         "Documents" : ['.doc','.docx','.txt','.ppt','.xlsx','.pdf'],
         "Installers" : ['.exe','.msi'],
@@ -21,11 +21,9 @@ class FileOrganizerEventHandler(FileSystemEventHandler):
         "Compressed" : ['.zip', '.rar']
     }
 
-    # def on_created(self, event):
     def on_moved(self, event):
         # ignore new folders
-        if event.is_directory:
-            return
+        if event.is_directory: return
 
         if not event.src_path.endswith('.crdownload'):
             return

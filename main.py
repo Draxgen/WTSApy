@@ -1,6 +1,6 @@
 '''
 Creates a bat file with all python scripts and runs the bat file so the python scripts in parallel in the background. 
-This script should be added to windows' Task Scheduler to be run at Startup
+This script should be added to windows' Startup folder to be run at Startup
 '''
 __author__ = 'Jan Tuziak'
 
@@ -9,7 +9,7 @@ import sys
 import subprocess
 import glob
 
-if __name__ == '__main__':
+def main():
     #get this script name
     this_script = os.path.basename(__file__)
 
@@ -23,8 +23,7 @@ if __name__ == '__main__':
         scripts.append(file)
 
     # if no scripts found stop execution
-    if not scripts:
-        sys.exit()
+    if not scripts: return
         
     # create batch file text
     bat = ''
@@ -43,3 +42,7 @@ if __name__ == '__main__':
 
     # remove batdh file
     os.remove(bat_path)    
+
+if __name__ == '__main__':
+    main()
+    
